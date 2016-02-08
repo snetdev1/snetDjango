@@ -1,0 +1,6 @@
+snet/settings.py
+snet/dbRouter.py
+snet/site.wsgi
+snet/wsgi.py
+.idea/
+*.pyc
