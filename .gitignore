@@ -5,3 +5,4 @@ snet/wsgi.py
 .idea/
 *.pyc
 manage.py
+settings.py
