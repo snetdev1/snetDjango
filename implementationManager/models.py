@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class project(models.Model):
@@ -23,3 +23,9 @@ class projectUser(models.Model):
 
     def __unicode__(self):
         return u'%s %s' % (self.project, self.user)
+
+class projectGroup(models.Model):
+    project = models.ForeignKey(project)
+    group = models.ForeignKey(Group)
+    def __unicode__(self):
+        return u'%s %s' % (self.project, self.group)
