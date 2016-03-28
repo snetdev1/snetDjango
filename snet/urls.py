@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from views import logTheUserOut, returnRootLanding, returnUserObject
+from views import logTheUserOut, returnRootLanding, returnUserObject, displayMetaData
+
+
 
 urlpatterns = patterns('',
-
                        url(r'^$', returnRootLanding),
                        url(r'^u/', returnUserObject),
                        url(r'^(?i)admin/login/', 'django.contrib.auth.views.login',
@@ -14,8 +15,10 @@ urlpatterns = patterns('',
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^(?i)logout/$', logTheUserOut),
 
-                       url(r'^(?i)meta/', include('implementationManager.urls')),
+                       url(r'^(?i)meta/', displayMetaData),
                        #url(r'^(?i)vote/', include('vote.urls')),
+                       url(r'^api/', include('implementationManager.urls')),
+
 
 
 )

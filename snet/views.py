@@ -46,3 +46,16 @@ def returnUserObject(request):
         return HttpResponse(u)
     else:
         raise Http404
+
+@login_required
+def displayMetaData(request):
+    if (request.method == 'GET'):
+
+
+        metaValues = request.META.items()
+        u = request.user
+
+        return render_to_response('metadata.html', {'u': u, 'metaData': metaValues},
+                                  context_instance=RequestContext(request))
+    else:
+        raise Http404
