@@ -19,3 +19,5 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = project
         fields = ('name', 'location', 'active')
+
+        #sync test
