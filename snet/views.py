@@ -8,6 +8,15 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from implementationManager.views import returnUserProjects
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import permissions
+from social.apps.django_app.views import _do_login
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from social.apps.django_app.utils import load_strategy, load_backend
+from rest_framework import status
+from social.apps.django_app.utils import psa, strategy
 
 
 def jSerializeData(inputData):
@@ -46,6 +55,53 @@ def returnUserObject(request):
         return HttpResponse(u)
     else:
         raise Http404
+
+
+
+
+@csrf_exempt
+@strategy()
+def auth_by_token(request, backend):
+    uri = ''
+    strategy = load_strategy(request)
+    backend = load_backend(strategy, backend, uri)
+    user = request.user
+    user = backend.do_auth(
+        access_token=request.data.get('access_token'),
+        user=user.is_authenticated() and user or None
+    )
+    if user and user.is_active:
+        return user# Return anything that makes sense here
+    else:
+        return None
+
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes((permissions.AllowAny,))
+def social_register(request):
+    auth_token = request.data.get('access_token', None)
+    backend = request.data.get('backend', None)
+    if auth_token and backend:
+        try:
+            user = auth_by_token(request, backend)
+        except Exception, err:
+            return Response(str(err), status=400)
+        if user:
+            uri = ''
+            strategy = load_strategy(request)
+            backend = load_backend(strategy, backend, uri)
+
+            #_do_login(strategy,backend, user)
+
+            #strategy = load_strategy(request=request, backend=backend)
+            _do_login(backend , user, strategy)
+
+            return Response( "User logged in", status=status.HTTP_200_OK )
+        else:
+            return Response("Bad Credentials", status=403)
+    else:
+        return Response("Bad request", status=400)
 
 @login_required
 def displayMetaData(request):
