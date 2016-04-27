@@ -91,10 +91,6 @@ def social_register(request):
             uri = ''
             strategy = load_strategy(request)
             backend = load_backend(strategy, backend, uri)
-
-            #_do_login(strategy,backend, user)
-
-            #strategy = load_strategy(request=request, backend=backend)
             _do_login(backend , user, strategy)
 
             return Response( "User logged in", status=status.HTTP_200_OK )
