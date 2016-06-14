@@ -20,4 +20,9 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         model = project
         fields = ('name', 'location', 'active')
 
+
+
+
+
+
         #sync test

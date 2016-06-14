@@ -8,6 +8,8 @@ from models import *
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from serializers import UserSerializer, GroupSerializer, ProjectSerializer
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 def jSerializeData(inputData):
     jsonSerializer = serializers.get_serializer('json')
@@ -18,6 +20,7 @@ def jSerializeData(inputData):
 
 
 @login_required
+@staff_member_required
 def displayMetaData(request):
     if (request.method == 'GET'):
 
@@ -32,6 +35,7 @@ def displayMetaData(request):
 
 
 @login_required
+@staff_member_required
 def returnMetaDataAsJSON(request):
     if (request.method == 'GET'):
         data = jSerializeData(request.META.items())

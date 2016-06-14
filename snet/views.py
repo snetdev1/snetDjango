@@ -17,6 +17,7 @@ from rest_framework.decorators import permission_classes
 from social.apps.django_app.utils import load_strategy, load_backend
 from rest_framework import status
 from social.apps.django_app.utils import psa, strategy
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def jSerializeData(inputData):
@@ -100,6 +101,7 @@ def social_register(request):
         return Response("Bad request", status=400)
 
 @login_required
+@staff_member_required
 def displayMetaData(request):
     if (request.method == 'GET'):
 
