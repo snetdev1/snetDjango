@@ -50,7 +50,7 @@ def returnRootLanding(request):
 
 def returnUserObject(request):
     if (request.method == 'GET'):
-        u = [False]
+        u = '[{"user" : "False"}]'
         if (request.user.is_authenticated()):
             u = jSerializeData(User.objects.filter(id=request.user.id))
         return HttpResponse(u)
