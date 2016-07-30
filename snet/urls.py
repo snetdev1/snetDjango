@@ -20,5 +20,6 @@ urlpatterns = patterns('',
                        #url(r'^(?i)vote/', include('vote.urls')),
                        url(r'^api/', include('implementationManager.urls')),
                        url(r'^here/', include('here.urls')),
+                       url(r'^core/', include('core.urls')),
 
 )
