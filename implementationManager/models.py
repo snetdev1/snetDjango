@@ -6,6 +6,7 @@ class project(models.Model):
     name = models.CharField('Project name', max_length=255)
     active = models.BooleanField('Active')
     location = models.CharField('Location', max_length=255)
+    apiurl = models.CharField('API', max_length=255)
 
     class Meta:
         ordering = ['name']
